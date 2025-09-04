@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Second Law of Ecology</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, #2e8b57, #228b22);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+        color: #555;
+        font-style: italic;
+      }
+
+      .flowchart {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .law-statement {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+        padding: 25px 40px;
+        border-radius: 15px;
+        font-size: 1.4rem;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+        transform: translateY(0);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .law-statement:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(76, 175, 80, 0.4);
+      }
+
+      .branches {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        width: 100%;
+        max-width: 1200px;
+      }
+
+      .branch {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .concept-box {
+        background: white;
+        border: 3px solid transparent;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        min-height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .concept-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .concept-box:hover::before {
+        left: 100%;
+      }
+
+      .no-waste .concept-box {
+        background: linear-gradient(135deg, #81c784, #66bb6a);
+        color: white;
+      }
+
+      .transformation .concept-box {
+        background: linear-gradient(135deg, #64b5f6, #42a5f5);
+        color: white;
+      }
+
+      .accumulation .concept-box {
+        background: linear-gradient(135deg, #ffb74d, #ff9800);
+        color: white;
+      }
+
+      .concept-box:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      }
+
+      .example-box {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border-left: 5px solid #4caf50;
+      }
+
+      .transformation .example-box {
+        border-left-color: #2196f3;
+      }
+
+      .accumulation .example-box {
+        border-left-color: #ff9800;
+      }
+
+      .example-box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .arrow {
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 20px solid #4caf50;
+        margin: 10px 0;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.1);
+        }
+      }
+
+      .connecting-lines {
+        position: absolute;
+        top: 220px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 3px;
+        background: linear-gradient(to right, #4caf50, #2196f3, #ff9800);
+        border-radius: 2px;
+      }
+
+      .icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+        font-style: italic;
+        color: #666;
+      }
+
+      @media (max-width: 768px) {
+        .branches {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+
+        .connecting-lines {
+          display: none;
+        }
+
+        .title {
+          font-size: 2rem;
+        }
+
+        .subtitle {
+          font-size: 1.1rem;
+        }
+      }
+
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeIn 0.8s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header fade-in">
+        <h1 class="title">The Second Law of Ecology</h1>
+        <p class="subtitle">Understanding Nature's Fundamental Principle</p>
+      </div>
+
+      <div class="flowchart">
+        <div class="law-statement fade-in" style="animation-delay: 0.2s">
+          <span class="icon">🌍</span>
+          Everything must go somewhere.
+        </div>
+
+        <div class="arrow"></div>
+
+        <div class="connecting-lines"></div>
+
+        <div class="branches">
+          <div class="branch no-waste fade-in" style="animation-delay: 0.4s">
+            <div class="concept-box">
+              <div>
+                <span class="icon">♻️</span>
+                <strong>"No waste"</strong>
+              </div>
+            </div>
+            <div class="arrow"></div>
+            <div class="concept-box">
+              <div>
+                Some waste and by-products are essential to biotic and abiotic
+                life.
+              </div>
+            </div>
+            <div class="arrow"></div>
+            <div class="example-box">
+              <strong>🌱 Photosynthesis Process</strong><br />
+              Plants convert CO₂ and water into glucose and oxygen, where oxygen
+              becomes essential for other life forms.
+            </div>
+          </div>
+
+          <div
+            class="branch transformation fade-in"
+            style="animation-delay: 0.6s"
+          >
+            <div class="concept-box">
+              <div>
+                <span class="icon">🌪️</span>
+                <strong>Waste transforms and travels</strong><br />
+                through air, water, and soil.
+              </div>
+            </div>
+            <div class="arrow"></div>
+            <div class="concept-box">
+              <div>
+                Waste changes its characteristics as it transfers from place to
+                place.
+              </div>
+            </div>
+            <div class="arrow"></div>
+            <div class="example-box">
+              <strong>🌡️ Mercury Transformation</strong><br />
+              When heated, mercury changes from liquid to gas and is carried
+              through the air, potentially contaminating distant ecosystems.
+            </div>
+          </div>
+
+          <div
+            class="branch accumulation fade-in"
+            style="animation-delay: 0.8s"
+          >
+            <div class="concept-box">
+              <div>
+                <span class="icon">⚠️</span>
+                <strong>Waste accumulates.</strong>
+              </div>
+            </div>
+            <div class="arrow"></div>
+            <div class="concept-box">
+              <div>Some wastes do not belong in nature.</div>
+            </div>
+            <div class="arrow"></div>
+            <div class="example-box">
+              <strong>🌊 Plastic Pollution</strong><br />
+              Human-generated plastics accumulate in oceans, forming garbage
+              patches and harming marine ecosystems for centuries.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer fade-in" style="animation-delay: 1s">
+        <p>
+          This ecological law reminds us that in nature's interconnected web,
+          nothing truly disappears—it only transforms and moves to different
+          locations. Understanding this principle is crucial for sustainable
+          environmental management.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
